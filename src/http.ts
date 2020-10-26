@@ -381,6 +381,7 @@ export class LemmyHttp {
         Object.keys(form).length > 0 ? `?${encodeGetParams(form)}` : '';
       const getUrl = `${this.buildFullUrl(endpoint)}${queryParams}`;
 
+      console.log('this runs');
       return fetch(getUrl, {
         method: 'GET',
         headers: {
