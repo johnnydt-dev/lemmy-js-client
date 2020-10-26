@@ -377,7 +377,9 @@ export class LemmyHttp {
     form: MessageType
   ): Promise<Res> {
     if (type_ == HttpType.Get) {
-      let getUrl = `${this.buildFullUrl(endpoint)}?${encodeGetParams(form)}`;
+      const queryParams = Object.keys(form).length > 0 ? `?${encodeGetParams(form)}` : ''
+      const getUrl = `${this.buildFullUrl(endpoint)}${queryParams}`;
+
       return fetch(getUrl, {
         method: 'GET',
       }).then(d => d.json());
