@@ -377,13 +377,15 @@ export class LemmyHttp {
     form: MessageType
   ): Promise<Res> {
     if (type_ == HttpType.Get) {
-      const queryParams = Object.keys(form).length > 0 ? `?${encodeGetParams(form)}` : ''
+      const queryParams =
+        Object.keys(form).length > 0 ? `?${encodeGetParams(form)}` : '';
       const getUrl = `${this.buildFullUrl(endpoint)}${queryParams}`;
 
       return fetch(getUrl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
       }).then(d => d.json());
     } else {
