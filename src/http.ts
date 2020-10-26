@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import {
   MessageType,
   LoginForm,
@@ -376,16 +377,11 @@ export class LemmyHttp {
     form: MessageType
   ): Promise<Res> {
     if (type_ == HttpType.Get) {
-      const queryParams =
-        Object.keys(form).length > 0 ? `?${encodeGetParams(form)}` : '';
-      const getUrl = `${this.buildFullUrl(endpoint)}${queryParams}`;
-
-      console.log('this runs');
+      let getUrl = `${this.buildFullUrl(endpoint)}?${encodeGetParams(form)}`;
       return fetch(getUrl, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Accept: 'application/json',
         },
       }).then(d => d.json());
     } else {
@@ -402,6 +398,7 @@ export class LemmyHttp {
 
 function encodeGetParams(p: any): string {
   return Object.entries(p)
+    .filter(([k, v]) => v !== undefined)
     .map(kv => kv.map(encodeURIComponent).join('='))
     .join('&');
 }
