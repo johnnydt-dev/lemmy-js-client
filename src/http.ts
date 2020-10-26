@@ -382,6 +382,9 @@ export class LemmyHttp {
 
       return fetch(getUrl, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       }).then(d => d.json());
     } else {
       return fetch(this.buildFullUrl(endpoint), {
